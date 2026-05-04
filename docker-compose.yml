@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: noteapp_mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: notes-app
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - noteapp_network
+
+  redis:
+    image: redis:alpine
+    container_name: noteapp_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - noteapp_network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: noteapp_backend
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/notes-app
+      - REDIS_URL=redis://redis:6379
+      - FRONTEND_URL=http://localhost:3000
+      - JWT_SECRET=${JWT_SECRET}
+      - NODE_ENV=production
+    depends_on:
+      - mongodb
+      - redis
+    networks:
+      - noteapp_network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: noteapp_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - noteapp_network
+    restart: unless-stopped
+
+volumes:
+  mongodb_data:
+
+networks:
+  noteapp_network:
+    driver: bridge
