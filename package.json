@@ -1,9 +1,0 @@
-{
-  "name": "noteapp-root",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "build": "cd frontend && npm install && node node_modules/react-scripts/bin/react-scripts.js build",
-    "install": "cd frontend && npm install"
-  }
-}

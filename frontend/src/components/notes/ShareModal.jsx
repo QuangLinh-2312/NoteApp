@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Share2, X, Trash2, Edit2, Shield, User, Users } from "lucide-react";
+import { Share2, X, Trash2, Shield, User, Users } from "lucide-react";
 import { API_URL } from "../../config/env";
 
 const ShareModal = ({
