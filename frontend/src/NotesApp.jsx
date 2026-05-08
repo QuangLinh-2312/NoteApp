@@ -913,6 +913,7 @@ const NotesApp = () => {
       setIsCreating(false);
       // Refresh categories sau khi tạo note
       await fetchCustomCategories();
+      showToast("Tạo ghi chú mới thành công!");
     } catch (error) {
       console.error("Lỗi khi tạo note:", error);
       await appAlert(
@@ -920,7 +921,7 @@ const NotesApp = () => {
         { title: "Lỗi", variant: "error" }
       );
     }
-  }, [getAuthHeaders, fetchCustomCategories, appAlert]);
+  }, [getAuthHeaders, fetchCustomCategories, appAlert, showToast]);
 
   const updateNoteFromModal = useCallback(async (noteToUpdate) => {
     if (!noteToUpdate.title.trim()) {
