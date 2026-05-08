@@ -59,6 +59,10 @@ mongoose
   .catch((err) => console.error("❌ Lỗi kết nối MongoDB:", err));
 
 // Routes
+app.get("/", (req, res) => {
+  res.status(200).send("Backend is running!");
+});
+
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/notes", require("./routes/notes"));
 app.use("/api/shares", require("./routes/shares"));
